@@ -30,6 +30,7 @@ impl<'d> EvaluationContext for MetadataAppender<'d> {
     ) {
         let msg = if eval_type == EvaluationType::Clause {
             match status {
+                #[allow(clippy::all)]
                 Some(status) => loop {
                     if status == Status::FAIL {
                         if let Some(value) = &from {

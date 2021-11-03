@@ -33,6 +33,7 @@ impl Display for OldGuardValues {
     }
 }
 
+#[allow(clippy::all)]
 impl Hash for OldGuardValues {
     fn hash<H: Hasher>(&self, state: &mut H) {
         match self {
