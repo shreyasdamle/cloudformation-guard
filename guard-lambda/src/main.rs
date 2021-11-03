@@ -3,7 +3,7 @@
 
 use cfn_guard;
 use lambda_runtime::{handler_fn, Context, Error};
-use log::{self, LevelFilter, info};
+use log::{self, info, LevelFilter};
 use serde_derive::{Deserialize, Serialize};
 use simple_logger::SimpleLogger;
 
@@ -22,8 +22,10 @@ struct CustomOutput {
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-
-    SimpleLogger::new().with_level(LevelFilter::Info).init().unwrap();
+    SimpleLogger::new()
+        .with_level(LevelFilter::Info)
+        .init()
+        .unwrap();
     let func = handler_fn(call_cfn_guard);
     lambda_runtime::run(func).await?;
     Ok(())
