@@ -79,6 +79,7 @@ pub enum Value {
     RangeChar(RangeType<char>),
 }
 
+#[allow(clippy::all)]
 impl Hash for Value {
     fn hash<H: Hasher>(&self, state: &mut H) {
         match self {

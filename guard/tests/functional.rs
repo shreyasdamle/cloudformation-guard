@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-use cfn_guard;
+
 
 mod tests {
     use super::*;
@@ -121,7 +121,7 @@ mod tests {
                 ]
               }
             ]"#;
-        let serialized = cfn_guard::run_checks(&data, &rule).unwrap();
+        let serialized = cfn_guard::run_checks(&data, rule).unwrap();
         let result = serde_json::from_str::<serde_json::Value>(&serialized)
             .ok()
             .unwrap();

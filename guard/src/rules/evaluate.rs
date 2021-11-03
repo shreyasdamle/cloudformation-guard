@@ -140,6 +140,7 @@ where
     F: Fn(&PathAwareValue, &PathAwareValue) -> Result<bool>,
 {
     let (overall, results) = compare_loop_all(lhs, rhs, compare, any_one_rhs)?;
+    #[allow(clippy::all)]
     let overall = 'outer: loop {
         if !overall {
             for (each, _, _) in results.iter() {
@@ -369,6 +370,7 @@ impl<'loc> Evaluate for GuardAccessClause<'loc> {
                     None => Some(negation_status(true, not, clause.negation)),
                     Some(l) => Some(if !l.is_empty() {
                         if l[0].is_list() || l[0].is_map() {
+                            #[allow(clippy::all)]
                             'all_empty: loop {
                                 for element in l {
                                     let status = match *element {
@@ -748,6 +750,7 @@ impl<'loc> Evaluate for GuardClause<'loc> {
             GuardClause::NamedRule(nr) => nr.evaluate(context, var_resolver),
             GuardClause::BlockClause(bc) => bc.evaluate(context, var_resolver),
             GuardClause::WhenBlock(conditions, clauses) => {
+                #[allow(clippy::all)]
                 let status = loop {
                     let mut when_conditions =
                         AutoReport::new(EvaluationType::Condition, var_resolver, "");
@@ -791,6 +794,7 @@ impl<'loc, T: Evaluate + 'loc> Evaluate for Conjunctions<T> {
         context: &'s PathAwareValue,
         var_resolver: &'s dyn EvaluationContext,
     ) -> Result<Status> {
+        #[allow(clippy::all)]
         Ok('outer: loop {
             let mut num_passes = 0;
             let mut num_fails = 0;
@@ -876,6 +880,7 @@ impl<'loc> Evaluate for BlockGuardClause<'loc> {
             Err(e) => return Err(e),
         };
 
+        #[allow(clippy::all)]
         Ok(report
             .status(loop {
                 let mut num_fail = 0;
@@ -965,6 +970,7 @@ impl<'loc> Evaluate for TypeBlock<'loc> {
             Err(_) => vec![context],
         };
 
+        #[allow(clippy::all)]
         let overall = loop {
             let mut num_fail = 0;
             let mut num_pass = 0;
